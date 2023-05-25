@@ -3,10 +3,12 @@
 #include <stdio.h>
 #include <stdarg.h>
 #include <time.h>
+#include <string.h>
 #include "logger.h"
 
 static char * logging_filename = "logger.txt"; // default log filename
-static int current_log_level = 0; // effects what is able to be outputed to log
+int current_log_level = 0; // effects what is able to be outputed to log
+
 
 //todo currently the logger does not handle if the passed log level is not a specic log level enum value
 

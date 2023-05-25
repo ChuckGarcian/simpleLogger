@@ -1,6 +1,3 @@
-
-#define log_file_name "shellProjectLog.txt"
-
 /**logging levels that control the granularity of the log*/
 enum log_levels {
     LOG_LEVEL_INFO,
