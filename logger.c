@@ -1,10 +1,9 @@
 /*Simple logging script*/
-
-#include <stdio.h>
-#include <stdarg.h>
 #include <time.h>
 #include <string.h>
+#include <stdio.h>
 #include "logger.h"
+
 
 static char * logging_filename = "logger.txt"; // default log filename
 int current_log_level = 0; // effects what is able to be outputed to log
@@ -12,7 +11,7 @@ int current_log_level = 0; // effects what is able to be outputed to log
 
 //todo currently the logger does not handle if the passed log level is not a specic log level enum value
 
-void log_function(int log_level, const char * format, ...) {
+void _log_function(int log_level, const char * caller_filename, int line,  const char * format, ...) {
     // don't log messages that are less severe than the current log level; 
     if (log_level < current_log_level) return;
 
@@ -28,20 +27,24 @@ void log_function(int log_level, const char * format, ...) {
         return;
     }
 
-    // prints the time and log level 'prefix'
-    fprintf(log_file, "[%s]", time_str);
+    // prints log level, time and location prefix
     switch (log_level) {
         case LOG_LEVEL_INFO:
-            fprintf(log_file, "[INFO] ");
+            fprintf(log_file, "[INFO]");
             break;
         case LOG_LEVEL_DEBUG:
-            fprintf(log_file, "[DEBUG] ");
+            fprintf(log_file, "[DEBUG]");
+            break;
         case LOG_LEVEL_ERROR:
-            fprintf(log_file, "[ERROR] ");
+            fprintf(log_file, "[ERROR]");
+            break;
         default:
             return;
             break;
     }
+
+    fprintf(log_file, "[%s]", time_str);
+    fprintf(log_file, "[%s:%d]: ", caller_filename, line);
 
     // C vardic function stuff; outputs the formated string to log file
     va_list args;

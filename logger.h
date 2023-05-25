@@ -1,3 +1,5 @@
+#include <stdarg.h>
+
 /**logging levels that control the granularity of the log*/
 enum log_levels {
     LOG_LEVEL_INFO,
@@ -5,8 +7,14 @@ enum log_levels {
     LOG_LEVEL_ERROR,
 };
 
+#define i LOG_LEVEL_INFO
+#define d LOG_LEVEL_DEBUG
+#define e LOG_LEVEL_ERROR
+
+
+//Wrapper for logging_function so the application doesnt have to pass __LINE__ or __FILE__
 /**
- * Takes a log_level and a formatted string and writes a message to the log file.
+ * Macro wrapper Takes a log_level and a formatted string and writes a message to the log file.
  * 
  * By default, the log file is "logger.txt", but this can be changed with the function set_log_file().
  * 
@@ -19,8 +27,10 @@ enum log_levels {
  * LOG_LEVEL_DEBUG : Fine-grained informational events that are most useful to debug an application.
  * LOG_LEVEL_ERROR : Error events that might still allow the application to continue running.
  */
-void log_function(int log_level, const char * format, ...);
+#define clog(log_level, ...) _log_function(log_level, __FILE__, __LINE__, __VA_ARGS__);
 
+
+void _log_function(int log_level, const char * filename, int line,  const char * format, ...);
 
 
 /*Set the file the logger outputs too*/
