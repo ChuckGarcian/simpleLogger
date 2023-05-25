@@ -11,7 +11,7 @@ int current_log_level = 0; // effects what is able to be outputed to log
 
 //todo currently the logger does not handle if the passed log level is not a specic log level enum value
 
-void _log_function(int log_level, const char * caller_filename, int line,  const char * format, ...) {
+void _log_function(int log_level, const char * caller_filename, const char * func_name, int line,  const char * format, ...) {
     // don't log messages that are less severe than the current log level; 
     if (log_level < current_log_level) return;
 
@@ -44,7 +44,7 @@ void _log_function(int log_level, const char * caller_filename, int line,  const
     }
 
     fprintf(log_file, "[%s]", time_str);
-    fprintf(log_file, "[%s:%d]: ", caller_filename, line);
+    fprintf(log_file, "[%s:func=%s:%d]: ", caller_filename, func_name, line);
 
     // C vardic function stuff; outputs the formated string to log file
     va_list args;

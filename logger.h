@@ -27,10 +27,10 @@ enum log_levels {
  * LOG_LEVEL_DEBUG : Fine-grained informational events that are most useful to debug an application.
  * LOG_LEVEL_ERROR : Error events that might still allow the application to continue running.
  */
-#define clog(log_level, ...) _log_function(log_level, __FILE__, __LINE__, __VA_ARGS__);
+#define clog(log_level, ...) _log_function(log_level, __FILE__, __func__, __LINE__, __VA_ARGS__);
 
 
-void _log_function(int log_level, const char * filename, int line,  const char * format, ...);
+void _log_function(int log_level, const char * caller_filename, const char * func_name, int line,  const char * format, ...);
 
 
 /*Set the file the logger outputs too*/
